@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: argo-app
+  name: argo-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: argo-app
+  template:
+    metadata:
+      labels:
+        app: argo-app
+    spec:
+      containers:
+        - image: ghcr.io/enfojt/argocd-example:main
+          name: argo-app
+          ports:
+            - containerPort: 3000
