@@ -67,6 +67,19 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: "3.6.1"
+
+      - name: Update Kubernetes resources
+        env:
+          DOCKER_USERNAME: ${{ github.actor }}
+        run: |
+          cd infra
+          kustomize edit set image argo-app=$DOCKER_USERNAME/argo-app:$GITHUB_SHA
+          cat kustomization.yaml
+
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
@@ -75,8 +88,8 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+         # tags: ${{ steps.meta.outputs.tags }}
+         # labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
