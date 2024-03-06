@@ -7,4 +7,4 @@ namespace: argo-app
 images:
 - name: argo-app
   newName: enfojt/argo-app
-  newTag: f8a53fbdaff0c7f82163ef2223f42357a5c0cb68
+  newTag: 5a51b86e82f7d3ca55bca5b6f1ff9d11b4700940
