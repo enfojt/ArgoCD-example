@@ -15,7 +15,7 @@ spec:
         app: argo-app
     spec:
       containers:
-        - image: ghcr.io/enfojt/argocd-example:main
+        - image: argo-app
           name: argo-app
           ports:
             - containerPort: 3000
