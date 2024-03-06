@@ -67,25 +67,6 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Setup Kustomize
-        uses: imranismail/setup-kustomize@v1
-        with:
-          kustomize-version: "3.6.1"
-
-      - name: Update Kubernetes resources
-        env:
-          DOCKER_USERNAME: ${{ github.actor }}
-        run: |
-          cd infra
-          kustomize edit set image argo-app=$DOCKER_USERNAME/argo-app:$GITHUB_SHA
-          cat kustomization.yaml
-
-      - name: Push updated image tag
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -am "feat: Update deployment image tag to ${{ github.sha }} [skip ci]"
-
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
@@ -94,7 +75,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ github.sha }}, latest
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -113,3 +94,38 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+
+  deploy:
+  
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    
+    - name: Check out code
+      uses: actions/checkout@v3
+      
+    - name: Setup Kustomize
+      uses: imranismail/setup-kustomize@v1
+      with:
+        kustomize-version: "3.6.1"
+
+    - name: Update Kubernetes resources
+      env:
+        DOCKER_USERNAME: ${{ github.actor }}
+      run: |
+        cd infra
+        kustomize edit set image argo-app=$DOCKER_USERNAME/argo-app:$GITHUB_SHA
+        cat kustomization.yaml
+
+    - name: Push updated image tag
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -am "feat: Update deployment image tag to ${{ github.sha }} [skip ci]"
+
+    - name: Push changes
+      uses: ad-m/github-push-action@main
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
