@@ -9,5 +9,5 @@ images:
   newName: enfojt/argo-app
   newTag: 5454f3070e511d6acb257a0a0566d3a501c67ce7
 - name: ghcr.io/enfojt/argocd-example
-  newName: enfojt/argo-app
+  newName: ghcr.io/enfojt/argocd-example
   newTag: 716e9ab0fd5a8d73952090e0b00d1808cc6c8a73
