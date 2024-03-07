@@ -9,5 +9,5 @@ images:
   newName: enfojt/argocd-example
   newTag: 249230c6490fec9d0b8f67b379cc33680bd63e9f
 - name: ghcr.io/enfojt/argocd-example
-  newName: ghcr.io/enfojt/argocd-example
-  newTag: 716e9ab0fd5a8d73952090e0b00d1808cc6c8a73
+  newName: enfojt/argocd-example
+  newTag: b4d3da1238d1515bb6f3b21b21f210ce84df8cc5
