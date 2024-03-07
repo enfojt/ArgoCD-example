@@ -5,9 +5,6 @@ resources:
 - argo-app-service.yaml
 namespace: argo-app
 images:
-- name: argocd-example
-  newName: enfojt/argocd-example
-  newTag: 249230c6490fec9d0b8f67b379cc33680bd63e9f
 - name: ghcr.io/enfojt/argocd-example
   newName: enfojt/argocd-example
   newTag: b4d3da1238d1515bb6f3b21b21f210ce84df8cc5
