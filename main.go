@@ -21,6 +21,7 @@ func main() {
 
 	router.GET("/health", health)
 	router.GET("/argo", argo)
+	router.GET("/test", test)
 
 	log.Fatal(router.Run(fmt.Sprintf("0.0.0.0:%s", port)))
 }
@@ -36,5 +37,12 @@ func argo(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"success": "true",
 		"message": "our CI/CD pipeline is working",
+	})
+}
+
+func test(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"success": "true",
+		"message": "this pipeline works",
 	})
 }
