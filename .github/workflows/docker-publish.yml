@@ -75,7 +75,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ghcr.io/enfojt/argocd-example:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -118,7 +118,7 @@ jobs:
         DOCKER_USERNAME: ${{ github.actor }}
       run: |
         cd infra
-        kustomize edit set image argo-app=$DOCKER_USERNAME/argo-app:$GITHUB_SHA
+        kustomize edit set image argocd-example=$DOCKER_USERNAME/argo-app:$GITHUB_SHA
         cat kustomization.yaml
 
     - name: Push updated image tag
