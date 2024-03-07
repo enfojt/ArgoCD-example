@@ -118,7 +118,7 @@ jobs:
         DOCKER_USERNAME: ${{ github.actor }}
       run: |
         cd infra
-        kustomize edit set image argocd-example=$DOCKER_USERNAME/argo-app:$GITHUB_SHA
+        kustomize edit set image argocd-example=$DOCKER_USERNAME/argocd-example:$GITHUB_SHA
         cat kustomization.yaml
 
     - name: Push updated image tag
