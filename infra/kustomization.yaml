@@ -7,4 +7,4 @@ namespace: argo-app
 images:
 - name: ghcr.io/enfojt/argocd-example
   newName: ghcr.io/enfojt/argocd-example
-  newTag: 4d8d1babb9210400b9c820dec319b02dda72347e
+  newTag: f360395990a36539d8e3d2009d65b3b83d09e814
